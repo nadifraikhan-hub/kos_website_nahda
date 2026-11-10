@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}{% block page_title %}Dashboard{% endblock %}
+{% block content %}
+<section class="welcome"><div><span class="welcome-tag">RINGKASAN KEUANGAN</span><h2>Selamat datang di Kos Nahda.</h2><p>Pantau pemasukan, biaya operasional, dan data penghuni dalam satu tempat.</p><a class="btn btn-light" href="{{ url_for('pemasukan') }}">＋ Catat pemasukan</a></div><div class="welcome-art"><div class="art-circle">N</div><div class="art-line"></div><div class="art-dot"></div></div></section>
+<section class="stats-grid">
+  <article class="stat-card"><div class="stat-top"><span>Total pemasukan lunas</span><span class="stat-icon brown">↙</span></div><strong>{{ total_masuk|rupiah }}</strong><small><span class="positive">●</span> Akumulasi transaksi lunas</small></article>
+  <article class="stat-card"><div class="stat-top"><span>Total pengeluaran</span><span class="stat-icon gray">↗</span></div><strong>{{ total_keluar|rupiah }}</strong><small>Biaya operasional tercatat</small></article>
+  <article class="stat-card"><div class="stat-top"><span>Saldo bersih</span><span class="stat-icon dark">◈</span></div><strong>{{ saldo|rupiah }}</strong><small>Pemasukan lunas dikurangi biaya</small></article>
+  <article class="stat-card"><div class="stat-top"><span>Penghuni aktif</span><span class="stat-icon pale">♙</span></div><strong>{{ penghuni_aktif }}</strong><small>Penghuni berstatus aktif</small></article>
+</section>
+<section class="panel"><div class="panel-head"><div><h3>Transaksi terbaru</h3><p>Enam transaksi pemasukan terakhir yang tercatat.</p></div><a class="text-link" href="{{ url_for('pemasukan') }}">Lihat semua →</a></div>
+<div class="table-wrap"><table><thead><tr><th>TANGGAL</th><th>KETERANGAN</th><th>PENGHUNI / KAMAR</th><th>METODE</th><th>STATUS</th><th class="right">JUMLAH</th></tr></thead><tbody>
+{% for r in transaksi %}<tr><td>{{ r.tanggal }}</td><td><strong>{{ r.keterangan }}</strong></td><td>{{ r.nama_penghuni or '—' }}{% if r.kamar %}<small class="subtext">Kamar {{ r.kamar }}</small>{% endif %}</td><td>{{ r.metode }}</td><td><span class="pill {{ 'pill-green' if r.status=='Lunas' else 'pill-yellow' }}">{{ r.status }}</span></td><td class="right money">{{ r.jumlah|rupiah }}</td></tr>
+{% else %}<tr><td colspan="6" class="empty">Belum ada transaksi pemasukan. Tambahkan transaksi pertama Anda.</td></tr>{% endfor %}
+</tbody></table></div></section>
+<section class="tip-row"><div class="tip-icon">✦</div><div><strong>Tips pengelolaan</strong><p>Catat transaksi segera setelah diterima dan salin file <code>kos_nahda.db</code> secara berkala sebagai cadangan.</p></div></section>
+{% endblock %}

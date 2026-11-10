@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Kos Nahda{% endblock %} | Keuangan Kos Nahda</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar">
+    <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">N</span><span><strong>KOS NAHDA</strong><small>KEUANGAN & DATA</small></span></a>
+    <div class="nav-label">MENU UTAMA</div>
+    <nav>
+      <a class="{{ 'active' if request.endpoint=='dashboard' else '' }}" href="{{ url_for('dashboard') }}"><span>▦</span> Dashboard</a>
+      <a class="{{ 'active' if request.endpoint in ['pemasukan','edit_pemasukan'] else '' }}" href="{{ url_for('pemasukan') }}"><span>↙</span> Pemasukan</a>
+      <a class="{{ 'active' if request.endpoint in ['penghuni','edit_penghuni'] else '' }}" href="{{ url_for('penghuni') }}"><span>♙</span> Data Penghuni</a>
+      <a class="{{ 'active' if request.endpoint in ['pengeluaran'] else '' }}" href="{{ url_for('pengeluaran') }}"><span>↗</span> Pengeluaran</a>
+      <a class="{{ 'active' if request.endpoint=='laporan' else '' }}" href="{{ url_for('laporan') }}"><span>▤</span> Laporan</a>
+    </nav>
+    <div class="sidebar-bottom"><div class="mini-avatar">KN</div><div><strong>Admin Kos</strong><small>Pengelola Kos Nahda</small></div></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div><span class="eyebrow">PENGELOLAAN KOS</span><h1>{% block page_title %}Dashboard{% endblock %}</h1></div><div class="top-date"><span class="status-dot"></span> Sistem pencatatan lokal <span class="date-pill">{{ hari_ini }}</span></div></header>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}<div class="flash-stack">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    <footer>© {{ tahun_ini }} <strong>Kos Nahda</strong><span>Catat rapi, kelola lebih mudah.</span></footer>
+  </main>
+</div>
+</body></html>

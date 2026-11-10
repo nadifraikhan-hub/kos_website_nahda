@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block title %}Pengeluaran{% endblock %}{% block page_title %}Pengeluaran{% endblock %}
+{% block content %}<div class="page-intro"><div><h2>Catat biaya operasional.</h2><p>Rekam biaya listrik, perbaikan, kebersihan, dan kebutuhan kos lainnya.</p></div><span class="count-chip">{{ rows|length }} catatan</span></div>
+<div class="content-grid">
+<section class="panel form-panel"><div class="panel-head"><div><h3>Tambah pengeluaran</h3><p>Masukkan biaya yang sudah dikeluarkan.</p></div><span class="panel-number">01</span></div>
+<form method="post" class="form-grid"><label>Tanggal<input type="date" name="tanggal" value="{{ hari_ini }}" required></label>
+<label>Kategori<select name="kategori"><option>Listrik / air</option><option>Perbaikan</option><option>Kebersihan</option><option>Perlengkapan</option><option>Pajak</option><option>Lainnya</option></select></label>
+<label class="full">Keterangan<input name="keterangan" placeholder="Contoh: Perbaikan keran kamar mandi" required></label>
+<label class="full">Jumlah (Rp)<input type="number" name="jumlah" min="1" placeholder="100000" required></label>
+<div class="full form-actions"><button class="btn btn-primary">＋ Simpan pengeluaran</button></div></form></section>
+<section class="panel records-panel"><div class="panel-head"><div><h3>Riwayat pengeluaran</h3><p>Catatan biaya operasional yang tersimpan.</p></div></div>
+<div class="table-wrap"><table><thead><tr><th>TANGGAL / KETERANGAN</th><th>KATEGORI</th><th>JUMLAH</th><th>AKSI</th></tr></thead><tbody>
+{% for r in rows %}<tr><td><strong>{{ r.keterangan }}</strong><small class="subtext">{{ r.tanggal }}</small></td><td><span class="room-tag">{{ r.kategori }}</span></td><td class="money">{{ r.jumlah|rupiah }}</td><td><form method="post" action="{{ url_for('hapus_pengeluaran',item_id=r.id) }}" onsubmit="return confirm('Hapus catatan pengeluaran ini?')"><button class="action-delete">Hapus</button></form></td></tr>
+{% else %}<tr><td colspan="4" class="empty">Belum ada catatan pengeluaran.</td></tr>{% endfor %}
+</tbody></table></div></section></div>{% endblock %}

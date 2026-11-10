@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}Ubah Pemasukan{% endblock %}{% block page_title %}Ubah Pemasukan{% endblock %}
+{% block content %}<div class="page-intro"><div><h2>Perbarui transaksi.</h2><p>Perubahan akan langsung disimpan ke database lokal.</p></div><a class="btn btn-secondary" href="{{ url_for('pemasukan') }}">← Kembali</a></div>
+<section class="panel narrow-panel"><form method="post" class="form-grid">
+<label>Tanggal pembayaran<input type="date" name="tanggal" value="{{ item.tanggal }}" required></label>
+<label>Penghuni / kamar<select name="penghuni_id"><option value="">— Tidak terkait penghuni —</option>{% for h in penghuni %}<option value="{{ h.id }}" {{ 'selected' if item.penghuni_id==h.id else '' }}>{{ h.nama }} · {{ h.kamar }}</option>{% endfor %}</select></label>
+<label class="full">Keterangan<input name="keterangan" value="{{ item.keterangan }}" required></label>
+<label>Jumlah (Rp)<input type="number" name="jumlah" min="1" value="{{ item.jumlah }}" required></label>
+<label>Metode pembayaran<select name="metode">{% for m in ['Tunai','Transfer bank','E-wallet','Lainnya'] %}<option {{ 'selected' if item.metode==m else '' }}>{{ m }}</option>{% endfor %}</select></label>
+<label class="full">Status<select name="status">{% for s in ['Lunas','Menunggu'] %}<option {{ 'selected' if item.status==s else '' }}>{{ s }}</option>{% endfor %}</select></label>
+<div class="full form-actions"><button class="btn btn-primary">Simpan perubahan</button><a class="btn btn-ghost" href="{{ url_for('pemasukan') }}">Batal</a></div></form></section>{% endblock %}

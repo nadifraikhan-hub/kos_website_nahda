@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block title %}Ubah Penghuni{% endblock %}{% block page_title %}Ubah Penghuni{% endblock %}
+{% block content %}<div class="page-intro"><div><h2>Perbarui data penghuni.</h2><p>Pastikan nomor kamar tidak digunakan penghuni lain.</p></div><a class="btn btn-secondary" href="{{ url_for('penghuni') }}">← Kembali</a></div>
+<section class="panel narrow-panel"><form method="post" class="form-grid">
+<label>Nama lengkap<input name="nama" value="{{ item.nama }}" required></label><label>Nomor kamar<input name="kamar" value="{{ item.kamar }}" required></label>
+<label>Nomor telepon<input name="telepon" value="{{ item.telepon }}"></label><label>Mulai tinggal<input type="date" name="mulai_tinggal" value="{{ item.mulai_tinggal }}"></label>
+<label class="full">Status<select name="status"><option {{ 'selected' if item.status=='Aktif' else '' }}>Aktif</option><option {{ 'selected' if item.status=='Nonaktif' else '' }}>Nonaktif</option></select></label>
+<div class="full form-actions"><button class="btn btn-primary">Simpan perubahan</button><a class="btn btn-ghost" href="{{ url_for('penghuni') }}">Batal</a></div></form></section>{% endblock %}
